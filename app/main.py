@@ -1,0 +1,90 @@
+import logging
+import time
+from fastapi import FastAPI , Request
+from fastapi.responses import JSONResponse, Response
+from fastapi.middleware.cors import CORSMiddleware
+from .database import engine
+from . import models
+from .routers import (
+    auth,
+    users,
+    auth,
+    profile,
+    restaurants,
+    foods,
+    orders,
+    ratings,
+    addresses,
+    payments,
+    tracking,
+    verification,
+)
+
+# ─── LOGGING SETUP ───────────────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("app.log")
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+app = FastAPI(
+    title="UberEats Clone API",
+    description="A food delivery API built with FastAPI",
+   
+)
+
+# ─── CORS MIDDLEWARE ──────────────────────────────────────
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    logger.info(f"→ {request.method} {request.url} - IP: {request.client.host}")
+    response : Response = await call_next(request)
+    process_time = round(time.time() - start_time, 3)
+    logger.info(
+        f"← {request.method} {request.url} "
+        f"- Status: {response.status_code} "
+        f"- Time: {process_time}s"
+    )
+    return response
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(
+        f"Unhandled error on {request.method} {request.url}: {str(exc)}",
+        exc_info=True
+    )
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal server error"}
+    )
+
+# ─── ROUTERS ──────────────────────────────────────────────
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(profile.router)
+app.include_router(restaurants.router)
+app.include_router(foods.router)
+app.include_router(orders.router)
+app.include_router(ratings.router)
+app.include_router(addresses.router)
+app.include_router(payments.router)
+app.include_router(tracking.router)
+app.include_router(verification.router)
+
+
+@app.get("/")
+def root():
+    return {"message": "Welcome to the UberEats Clone API"}

@@ -1,0 +1,80 @@
+# Environment
+.env
+.env.*
+!.env.example
+.env.local
+.env.production
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*$py.class
+*.pycache
+.Python
+.pytest_cache/
+
+.mypy_cache/
+
+# Database
+*.db
+*.sqlite3
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+app.log
+logs/
+
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+alembic/__pycache__/
+alembic/versions/*.pyc
+.docker/
+
+tmp/
+temp/
+
+*.db
+*.sqlite
+*.sqlite3
+
+.DS_Store
+Thumbs.db
+
+.ipynb_checkpoints/
+
+.vscode/
+.idea/
+
+.mypy_cache/
+
+*.iml
+
+
+.coverage
+htmlcov/
+
+uploads/
+media/
