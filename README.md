@@ -292,6 +292,23 @@ http://localhost:8000/docs
 
 ---
 
+## Docker Setup
+
+**Run with Docker Compose:**
+```bash
+docker-compose up --build
+```
+
+**Stop Docker:**
+```bash
+docker-compose down
+```
+
+The app will be available at:
+http://localhost:8000/docs
+
+> Make sure Docker Desktop is installed and running before using these commands.
+
 
 
 ## Production Features
