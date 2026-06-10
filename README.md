@@ -245,7 +245,7 @@ RESET_TOKEN_EXPIRE_MINUTES=15
 
 ### 1. Clone the repository
 
-```bash
+```
 git clone https://github.com/KhonaniBackendDev/fast-food-delivery-api.git
 cd fast-food-delivery-api
 ```
@@ -286,7 +286,7 @@ uvicorn app.main:app --reload
 
 ### 7. Open API Documentation
 
-```text
+```
 http://localhost:8000/docs
 ```
 
@@ -465,8 +465,8 @@ Any future expiry date and any CVC.
 
 ## Author
 
-Built by **[KhonaniBackendDev]**
-
+Built by **[Khonani]**
+GitHub: [KhonaniBackendDev](https://github.com/KhonaniBackendDev)
 
 ---
 
