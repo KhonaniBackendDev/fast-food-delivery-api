@@ -4,6 +4,15 @@ A production-ready food delivery REST API built with Python and FastAPI, inspire
 This API powers a complete food delivery platform supporting two roles — restaurant owners and clients — with real-time order tracking, 
 Stripe payment processing, and automated email and SMS notifications.
 
+## Live API
+
+| Resource | URL |
+|-----------|-----|
+| API Base URL | https://fast-food-delivery-api-production.up.railway.app |
+| Swagger Documentation | https://fast-food-delivery-api-production.up.railway.app/docs |
+
+You can test all endpoints directly through the Swagger UI without installing the project locally.
+
 ---
 
 ## Architecture Highlights
@@ -245,10 +254,12 @@ RESET_TOKEN_EXPIRE_MINUTES=15
 
 ### 1. Clone the repository
 
-```
+
 git clone https://github.com/KhonaniBackendDev/fast-food-delivery-api.git
+
+
 cd fast-food-delivery-api
-```
+
 
 ### 2. Create and activate virtual environment
 
