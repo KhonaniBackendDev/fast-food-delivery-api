@@ -295,6 +295,39 @@ def reset_password(reset_data: schemas.ResetPassword, db: Session = Depends(get_
     return {
         "message": "Password reset successfully. Please log in with your new password"
     }
+    
+    
+@router.post("/demo/verify/{user_public_id}")
+def demo_verify_user(
+    user_public_id: str,
+    db: Session = Depends(get_db)
+):
+    # Block this endpoint if environment is production
+    if settings.env not in ["development", "demo"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This endpoint is not available in production"
+        )
+
+    user = db.execute(
+        select(models.User).where(
+            models.User.public_id == user_public_id
+        )
+    ).scalar_one_or_none()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+
+    user.is_email_verified = True
+    user.is_phone_verified = True
+    user.is_verified = True
+
+    db.commit()
+
+    return {"message": "User verified successfully for demo purposes"}    
 
 
 # # ─── EMERGENCY LOCK ───────────────────────────────────────

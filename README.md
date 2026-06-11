@@ -14,7 +14,104 @@ You can test all endpoints directly through the Swagger UI without installing th
 
 (Press the Swagger Documentation link above to explore and test the API.)
 
+
+## Testing the Live API
+
+### Quick Start for Testing:
+
+**Step 1 — Register a new account**
+
+Hit the `POST /users/register` endpoint with the following body:
+```json
+{
+    "name": "Your Name",
+    "email": "youremail@gmail.com",
+    "phone_number": "XXXXXXXXX",
+    "password": "Password123!",
+    "role": "client"
+}
+```
+> You can also register as `"role": "owner"` to test restaurant and food management endpoints.
+
+From the response copy your `public_id` — you will need it in the next step.
+
 ---
+
+**Step 2 — Verify your account (Demo Only)**
+
+Since this is a demo environment, email and SMS verification are bypassed.
+
+Hit the `POST /demo/verify/{public_id}` endpoint.
+
+Paste your `public_id` from Step 1 into the URL.
+
+You will receive:
+```json
+{
+    "message": "User verified successfully for demo purposes"
+}
+```
+
+> In a real production environment users would receive a verification email and SMS code to verify their account.
+
+---
+
+**Step 3 — Authorize in Swagger UI**
+
+1. Click the  **Authorize** button at the top right of this page
+2. A popup will appear with the following fields:
+   - **username** → enter your email address
+   - **password** → enter your password
+   - **client_id** → leave this empty
+   - **client_secret** → leave this empty
+3. Click the **Authorize** button inside the popup
+4. Click **Close**
+
+Swagger will automatically hit the login endpoint, generate a fresh access token, and store it for all subsequent requests. You will not need to manually paste any tokens.
+
+---
+
+**Step 4 — You are ready to test all endpoints!**
+
+You are now registered, verified, and authorized. You can test every single endpoint in this API including:
+
+-  Browse all open restaurants with ratings
+-  View restaurant menus
+-  Place and manage orders
+-  Process payments via Stripe
+-  Rate restaurants
+-  Manage delivery addresses
+-  Update your profile
+-  Reorder from previous orders
+
+---
+
+**Test Card for Stripe Payments**
+
+When testing the payment flow use the following Stripe test card:
+
+| Field | Value |
+|---|---|
+| Card Number | 4242 4242 4242 4242 |
+| Expiry Date | Any future date |
+| CVC | Any 3 digits |
+| Name | Any name |
+
+---
+
+**Switching Between Roles**
+
+To test owner endpoints register a second account with `"role": "owner"` and repeat Steps 1 to 3.
+
+As an owner you can:
+-  Create and manage your restaurant
+-  Add and manage food items
+-  View and update incoming order statuses
+-  Upload restaurant and food images
+
+---
+
+> ⚠️ **Note:** The `POST /demo/verify/{public_id}` endpoint is only available in demo mode. In a real production deployment this endpoint is disabled and users must verify their identity through email and SMS.
 
 ## Architecture Highlights
 
