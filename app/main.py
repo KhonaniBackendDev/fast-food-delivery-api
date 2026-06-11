@@ -1,6 +1,7 @@
 import logging
 import time
 from fastapi import FastAPI , Request
+from fastapi.security import HTTPBearer
 from fastapi.responses import JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine
@@ -32,8 +33,10 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+security=HTTPBearer()
+
 app = FastAPI(
-    title="UberEats Clone API",
+    title="Fast Food Delivery API",
     description="A food delivery API built with FastAPI",
    
 )
