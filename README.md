@@ -8,10 +8,11 @@ Stripe payment processing, and automated email and SMS notifications.
 
 | Resource | URL |
 |-----------|-----|
-| API Base URL | https://fast-food-delivery-api-production.up.railway.app |
 | Swagger Documentation | https://fast-food-delivery-api-production.up.railway.app/docs |
 
 You can test all endpoints directly through the Swagger UI without installing the project locally.
+
+(Press the Swagger Documentation link above to explore and test the API.)
 
 ---
 
