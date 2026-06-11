@@ -7,7 +7,7 @@ resend.api_key = settings.resend_api_key
 def send_verification_email(to: str, name: str, token: str):
     verification_link = f"{settings.base_url}/verify-email?token={token}"
 
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"EMAIL LINK: {verification_link}")
         return
 
@@ -37,7 +37,7 @@ def send_verification_email(to: str, name: str, token: str):
 def send_password_reset_email(to: str, name: str, token: str):
     reset_link = f"{settings.frontend_url}/reset-password?token={token}"
 
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"PASSWORD RESET LINK: {reset_link}")
         return
     
@@ -67,7 +67,7 @@ def send_password_reset_email(to: str, name: str, token: str):
 def send_order_confirmation_email(
     to: str, name: str, order_id: str, total_price: str, restaurant_name: str
 ):
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"ORDER CONFIRMATION EMAIL: would be sent to {to}")
         return
     
@@ -92,7 +92,7 @@ def send_order_confirmation_email(
 
 def send_welcome_email(to: str, name: str):
     
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"WELCOME")
         return
     
@@ -113,7 +113,7 @@ def send_welcome_email(to: str, name: str):
 
 def send_password_changed_email(to: str, name: str):
     
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"PASSWORD CHANGED EMAIL: would be sent to {to}")
         return
     
@@ -135,7 +135,7 @@ def send_password_changed_email(to: str, name: str):
 def send_order_out_for_delivery_email(
     to: str, name: str, restaurant_name: str, order_id: str
 ):
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"OUT FOR DELIVERY EMAIL: would be sent to {to}")
         return
     
@@ -156,7 +156,7 @@ def send_order_out_for_delivery_email(
 
 def send_order_delivered_email(to: str, name: str, restaurant_name: str, order_id: str):
     
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"ORDER DELIVERED EMAIL: would be sent to {to}")
         return
     

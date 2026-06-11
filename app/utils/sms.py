@@ -5,7 +5,7 @@ client = Client(settings.twilio_account_sid, settings.twilio_auth_token)
 
 
 def send_sms(to: str, body: str):
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"\n[DEV SMS]")
         print(f"To: {to}")
         print(f"Message: {body}")
@@ -22,7 +22,7 @@ def send_sms(to: str, body: str):
         print(f"[SMS ERROR] Failed to send SMS to {to}: {e}")
 
 def send_phone_verification_sms(to: str, code: str):
-    if settings.env == "development":
+    if settings.env in ["development", "demo"]:
         print(f"SMS CODE: {code}")
         return
 
