@@ -159,8 +159,8 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
             
             #payment: models.Payment
             
-            print(f"Order ID: {order.id}")  # ← add this
-            print(f"Payment found: {payment}")  # ← add this
+            print(f"Order ID: {order.id}")  
+            print(f"Payment found: {payment}")  
 
             if not payment:
                 print("NO PAYMENT FOUND FOR THIS ORDER!")
@@ -218,29 +218,32 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
                 
         except Exception as e:
             print(f"Webhook error: {e}")
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=str(e)
-            )    
+            import traceback
+            traceback.print_exc()
+            
+            return {"message": f"Webhook processing error: {str(e)}"}   
 
     # 9. Handle failed payment
     elif event.type == "checkout.session.expired":
-        session = event.data.object
-        order_public_id = session.metadata["order_id"] if session.metadata else None
+        try:
+            session = event.data.object
+            order_public_id = session.metadata["order_id"] if session.metadata else None
 
-        if order_public_id:
-            order = db.execute(
-                select(models.Order).where(models.Order.public_id == order_public_id)
-            ).scalar_one_or_none()
-
-            if order:
-                payment = db.execute(
-                    select(models.Payment).where(models.Payment.order_id == order.id)
+            if order_public_id:
+                order = db.execute(
+                    select(models.Order).where(models.Order.public_id == order_public_id)
                 ).scalar_one_or_none()
 
-                if payment:
-                    payment.status = schemas.PaymentStatus.failed
-                    db.commit()
+                if order:
+                    payment = db.execute(
+                        select(models.Payment).where(models.Payment.order_id == order.id)
+                    ).scalar_one_or_none()
+
+                    if payment:
+                        payment.status = schemas.PaymentStatus.failed
+                        db.commit()
+        except Exception as e:
+            print(f"Expired session error: {e}")                
 
     return {"message": "Webhook received successfully"}
 
