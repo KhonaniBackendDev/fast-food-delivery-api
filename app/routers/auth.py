@@ -18,7 +18,7 @@ MAX_ATTEMPTS = 3
 LOCK_TIME = timedelta(minutes=30)
 
 
-@router.post("/", response_model=schemas.Token)
+@router.post("/login", response_model=schemas.Token)
 def login_user(
     user_credentials: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
