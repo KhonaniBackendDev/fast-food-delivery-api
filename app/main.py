@@ -38,7 +38,7 @@ security=HTTPBearer()
 app = FastAPI(
     title="Fast Food Delivery API",
     description="A food delivery API built with FastAPI",
-   
+    root_path_in_servers=False
 )
 
 # ─── CORS MIDDLEWARE ──────────────────────────────────────
