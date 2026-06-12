@@ -1,6 +1,7 @@
 import logging
 import time
 from fastapi import FastAPI , Request
+from fastapi.openapi.utils import get_openapi
 from fastapi.security import HTTPBearer
 from fastapi.responses import JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -40,6 +41,27 @@ app = FastAPI(
     description="A food delivery API built with FastAPI",
     root_path_in_servers=False
 )
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="Fast Food Delivery API",
+        description="A production-ready food delivery REST API",
+        routes=app.routes,
+    )
+    openapi_schema["components"]["securitySchemes"] = {
+        "BearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT",
+        }
+    }
+    openapi_schema["security"] = [{"BearerAuth": []}]
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
 
 # ─── CORS MIDDLEWARE ──────────────────────────────────────
 app.add_middleware(
